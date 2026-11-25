@@ -27,9 +27,16 @@ $form.Controls.Add($labelPC)
 
 $comboPC = New-Object System.Windows.Forms.ComboBox
 $comboPC.Location = New-Object System.Drawing.Point(20,110)
-$comboPC.Size = New-Object System.Drawing.Size(150,20)
+$comboPC.Size = New-Object System.Drawing.Size(250,20)
 $comboPC.DropDownStyle = "DropDownList"
-@("Batcom1","Batcom2","Batsuit","LOM") | ForEach-Object { $comboPC.Items.Add($_) } | Out-Null
+# What the dropdown shows -> the exact MQTT topic M3 publishes to (case-sensitive).
+$pcMap = [ordered]@{
+    "BATCOM 1 (Touchscreen)" = "Batcom1"
+    "BATCOM 2 (Keyboard)"    = "Batcom2"
+    "BATSUIT"                = "Batsuit"
+    "LOM"                    = "LOM"
+}
+$pcMap.Keys | ForEach-Object { $comboPC.Items.Add($_) } | Out-Null
 $comboPC.SelectedIndex = 0
 $form.Controls.Add($comboPC)
 
@@ -70,7 +77,7 @@ $buttonSave.Add_Click({
         return
     }
     # The MQTT topic is exactly the PC name (case-sensitive): Batcom1, Batcom2, Batsuit or LOM.
-    $topic = $comboPC.SelectedItem.ToString()
+    $topic = $pcMap[$comboPC.SelectedItem.ToString()]
     $browser = $textBrowser.Text.Trim()
     if ($browser -eq "") { $browser = "MythricClient" }
     $ptPath = $textPowerToys.Text.Trim()
@@ -107,4 +114,5 @@ $buttonSave.Add_Click({
     $form.Close()
 })
 
+[void]$form.ShowDialog()
 [void]$form.ShowDialog()
