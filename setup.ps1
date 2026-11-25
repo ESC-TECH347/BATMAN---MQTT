@@ -1,3 +1,4 @@
+
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
@@ -17,6 +18,7 @@ $form.Controls.Add($labelIP)
 $textIP = New-Object System.Windows.Forms.TextBox
 $textIP.Location = New-Object System.Drawing.Point(20,45)
 $textIP.Size = New-Object System.Drawing.Size(320,20)
+$textIP.Text = "192.168.6.110"
 $form.Controls.Add($textIP)
 
 $labelPC = New-Object System.Windows.Forms.Label
@@ -114,5 +116,4 @@ $buttonSave.Add_Click({
     $form.Close()
 })
 
-[void]$form.ShowDialog()
 [void]$form.ShowDialog()
